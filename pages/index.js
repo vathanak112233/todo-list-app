@@ -25,7 +25,7 @@ export default function Home() {
 
   const deleteTask = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3030/task/${id}`, {
+      const response = await fetch(`/api/task/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3030/task");
+        const response = await fetch("/api/task");
         const data = await response.json();
         setRows(data);
       } catch (error) {

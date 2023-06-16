@@ -39,7 +39,7 @@ const Form = () => {
 
   const saveTask = async () => {
     try {
-      const response = await fetch("http://localhost:3030/task", {
+      const response = await fetch("/api/task", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const Form = () => {
 
   const updateTask = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3030/task/${id}`, {
+      const response = await fetch(`/api/task/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const Form = () => {
     }
     const getTaskById = async (id) => {
       try {
-        const response = await fetch(`http://localhost:3030/task/${id}`);
+        const response = await fetch(`/api/task/${id}`);
         const formValue = await response.json();
         if (response.status === 200) {
           setForm({ ...formValue, dueDate: dayjs(formValue.dueDate) });
