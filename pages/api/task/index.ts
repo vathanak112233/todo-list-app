@@ -3,8 +3,7 @@ const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
     const { method } = req;
-
-    console.log(method);
+    
     switch (method) {
         case 'GET':
             try {

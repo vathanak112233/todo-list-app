@@ -1,4 +1,5 @@
-import Image from 'next/image'
+import Image from "next/image";
+import ButtonSign from "./ButtonSign";
 
 const NavBar = () => {
   return (
@@ -6,7 +7,7 @@ const NavBar = () => {
       <div className="logo">
         <Image src="/logo.png" alt="logo" width={64} height={64} />
       </div>
-      <a href="./">Home</a>
+      <ButtonSign />
     </nav>
   );
 };
