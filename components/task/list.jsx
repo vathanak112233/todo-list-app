@@ -1,5 +1,5 @@
 import styles from "./../../styles/Home.module.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -18,8 +18,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { getSession } from "next-auth/react";
 
 const TaskList = () => {
-  const [rows, setRows] = React.useState([]);
-  const [accessToken, setAccessToken] = React.useState("");
+  const [rows, setRows] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
 
   const deleteTask = async (id) => {
     try {
@@ -27,7 +27,7 @@ const TaskList = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `${accessToken}`,
+          authorization: accessToken,
         },
       });
 
@@ -40,13 +40,12 @@ const TaskList = () => {
     }
   };
 
-  const fetchTasks = async (req, res) => {
+  const fetchTasks = async () => {
     if (accessToken) {
       try {
-        // const { user: session } = await getSession();
         const response = await fetch("/api/task", {
           headers: {
-            authorization: `${accessToken}`,
+            authorization: accessToken,
           },
         });
         const data = await response.json();
@@ -60,7 +59,7 @@ const TaskList = () => {
   const fetchSession = async () => {
     const { user: session } = await getSession();
     if (session) {
-      setAccessToken(session.accessToken);
+      setAccessToken(session["accessToken"]);
     }
   };
 
