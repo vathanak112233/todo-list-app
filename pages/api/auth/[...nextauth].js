@@ -18,7 +18,7 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
         // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
 
-        const response = await fetch("http://localhost:3000/api/auth/login", {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -28,8 +28,8 @@ export default NextAuth({
             password: credentials?.password,
           }),
         });
-        const user = await response.json();
 
+        const user = await res.json();
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user;
@@ -42,4 +42,18 @@ export default NextAuth({
       },
     }),
   ],
+  session: {
+    jwt: true,
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token;
+      return session;
+    },
+  },
 });
+
+// export { handler as GET, handler as POST };

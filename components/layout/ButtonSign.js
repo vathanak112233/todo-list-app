@@ -5,19 +5,23 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const ButtonSign = () => {
   const { data: session } = useSession();
-
+  
   if (session && session.user) {
     return (
       <>
-        <p>{session?.user.name}</p>
-        <Button onClick={() => signOut()}> Sing Out</Button>
+        <div className="user-login">{session.user?.username}</div>
+        <div>
+          <Button variant="outlined" type="button" onClick={() => signOut()}>
+            Sing Out
+          </Button>
+        </div>
       </>
     );
   } else {
     return (
-      <>
-        <Button onClick={() => signIn()}> Sing In</Button>
-      </>
+      <Button variant="outlined" type="button" onClick={() => signIn()}>
+        Sing In
+      </Button>
     );
   }
 };

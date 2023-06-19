@@ -1,8 +1,7 @@
-import Form from "../form";
+import Form from "../../../components/task/form";
 
 const UpdateTask = () => {
-
-  return (<Form />);
+  return <Form />;
 };
 
 export default UpdateTask;

@@ -1,12 +1,17 @@
 import { PrismaClient } from '@prisma/client'
+import { verifyJwt } from '../../../lib/jwt';
 const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
-    const { method, query } = req;
+    const { method, query, headers } = req;
+    const accessToken = headers.authorization;
 
     switch (method) {
         case 'GET':
             try {
+                if (!accessToken || !verifyJwt(accessToken)) {
+                    return res.status(401).json({ error: 'unauthorized' });
+                }
                 const getTask = await prisma.task.findUnique({
                     where: {
                         id: +query.id
@@ -18,6 +23,9 @@ export default async function handler(req, res) {
             }
         case 'PUT':
             try {
+                if (!accessToken || !verifyJwt(accessToken)) {
+                    return res.status(401).json({ error: 'unauthorized' });
+                }
                 const updatedTask = await prisma.task.update({
                     where: { id: +query.id },
                     data: req.body,
@@ -29,6 +37,9 @@ export default async function handler(req, res) {
 
         case 'DELETE':
             try {
+                if (!accessToken || !verifyJwt(accessToken)) {
+                    return res.status(401).json({ error: 'unauthorized' });
+                }
                 const deletedTask = await prisma.task.delete({
                     where: { id: +query.id },
                 });
